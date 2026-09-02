@@ -67,8 +67,11 @@ def Regression(y,x,k,x_0):
             args=(weights, nearest_mort, nearest_poor)
         )
         beta = result.x
-
-        return f(beta, x_0)
+        fitted = f(beta,nearest_poor)
+        errors = nearest_mort - fitted
+        variance = np.mean(errors**2)
+        se = np.sqrt(variance)
+        return f(beta, x_0), se
     
     def MSE(mort, poor, k):
         predictions = []
